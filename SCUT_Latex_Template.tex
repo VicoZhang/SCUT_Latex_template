@@ -1,0 +1,395 @@
+%!mode::"TeX:UTF-8"
+% ============================================================ %
+% article 类
+\documentclass[fontset=windows,AutoFakeBold,a4paper]{article}
+
+% ============================================================ %
+% 导言区
+% ------------------------------------------------------------ %
+% 导入宏包
+\usepackage[UTF8,heading=true]{ctex} %中文支持 heading=true 以支持ctexset
+\usepackage{amssymb}%数学符号
+\usepackage{mflogo,texnames} % 特殊符号和预定义字符串
+\usepackage{bm}%加粗希腊字母
+\usepackage{amsthm}%编写定理
+\usepackage{graphicx}%插入图片
+\usepackage{color}%调节字体颜色
+\usepackage[margin=1in]{geometry}%设置页面布局
+\usepackage[colorlinks,linkcolor=black,anchorcolor=black,citecolor=black]{hyperref}%交叉引用超链接
+\usepackage{setspace}%使用间距宏包
+\usepackage{abstract}%输入摘要
+\usepackage{titletoc}%调节目录字体
+\usepackage{fontspec}%调节英文字体
+\usepackage[numbers,sort&compress]{natbib}%参考文献
+\usepackage{fancyhdr}%页脚页尾，fancyhdr放在geometry后以免报错
+\usepackage{ifthen}%调节是oneside还是twoside
+% ------------------------------------------------------------ %
+% 全局设置，包括：引用上标设置、英文字体设置、公式标号设置、章节标题显示格式设置、目录格式设置、页眉页脚设置、封面设置
+
+% 引用上标设置
+\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}  % 上标表示的引用 引用设置，如果要使用上标引用，使用命令 \upcite{} 使用平齐应用，使用\cite{}
+
+% 英文字体设置
+\newcommand{\tnewroman}{\fontspec{Times New Roman}}  % 调节英文字体为 Times New Roman
+
+%公式标号设置，与章节相关,形式是(#.#)
+\makeatletter
+\@addtoreset{equation}{section}
+\makeatother
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}  % 重命名theequation，满足形式 section.equation
+
+% 修改默认的章节标题显示格式
+\ctexset{
+    section={
+        format={\centering\zihao{-2}\heiti},  % 小二号黑体居中
+        name={第,章},  % 序号前后加字
+        number={\chinese{section}}  % 设置章节编号数字输出格式为中文
+    },
+    subsection={
+        format={\zihao{-3}\heiti},
+        aftername={\hspace{1em}},
+        beforeskip={1ex},
+        afterskip={1ex}
+    },
+    subsubsection={
+        format={\zihao{4}\heiti},
+        aftername={\hspace{1em}},
+        beforeskip={1ex},
+        afterskip={1ex}
+    },
+    paragraph={
+        format={\raggedright\heiti\zihao{-4}}
+    }
+}
+
+% 目录格式设置
+\renewcommand\contentsname{目\quad\quad 录}  % 将英文“Contents”重命名为目录
+\titlecontents{section}[0em]{\zihao{4}\heiti}{\contentspush{\thecontentslabel\hspace{0.7em}}}{}{\titlerule*[5pt]{.}\contentspage}
+\titlecontents{subsection}[2.2em]{\zihao{-4}\songti}{\contentspush{\thecontentslabel\hspace{0.7em}}}{}{\titlerule*[5pt]{.}\contentspage}
+\titlecontents{subsubsection}[3.9em]{\zihao{-4}\songti}{\contentspush{\thecontentslabel\hspace{0.7em}}}{}{\titlerule*[5pt]{.}\contentspage}
+
+% 页眉页脚设置
+\pagestyle{fancy} % 使用fancy宏包设置页眉页脚
+\fancyhf{} % 清除默认页眉页脚
+\renewcommand{\sectionmark}[1]{\markboth{第\chinese{section}章\quad#1}{}} %\markboth{左页页眉}{右页页眉}，\markboth命令实际会修改\leftmark和\rightmark两个宏的内容，并在页眉处输出。
+\fancyhead[C]{\songti 华南理工大学学士学位论文}  %偶数页页眉 
+\fancyhead[CO]{\songti \leftmark}  % 奇数页页眉
+\fancyfoot[C]{\thepage}
+
+% 封面设置
+\makeatletter
+\newcommand\dlmu[2][4cm]{\hskip1pt\underline{\hb@xt@ #1{\hss#2\hss}}\hskip3pt}
+\makeatother
+
+
+% ============================================================ %
+% 正文部分
+\begin{document}
+% ------------------------------------------------------------ %
+% 插入封面
+\songti
+\zihao{-4}
+\thispagestyle{empty}
+\begin{figure}[h]
+    \centering
+    \includegraphics[height=2.75cm, width=12.1cm]{fig/SCUT.jpg}\\
+\end{figure}
+\vspace{-1.8cm}
+\begin{spacing}{1.8} %这个1.8是目测的……
+\begin{center} 
+    \zihao{0}
+    \heiti
+    课程报告 % 格式：黑体初号，内容根据实际情况修改
+\end{center}
+\vspace{2.8cm}
+\begin{center}
+    \zihao{2}
+    \heiti{\textbf{课程报告题目}}
+\end{center}
+\vspace{4.5cm}
+\begin{center}
+    \songti{
+    \zihao{-3}
+    \textbf{学\quad\quad 院\quad\dlmu[7cm]{电力学院}}\\ 
+    \textbf{专\quad\quad 业\quad\dlmu[7cm]{电气工程及其自动化}}\\ %适当延长了下划线，专业名太长
+    \textbf{姓\quad\quad 名\quad\dlmu[7cm]{某某某}}\\
+    \textbf{学\quad\quad 号\quad\dlmu[7cm]{000000000000}}\\
+    \textbf{指导老师\quad\dlmu[7cm]{某某某}}\\
+    \textbf{提交日期\quad\dlmu[7cm]{2023年1月1日}}\\
+ }
+\end{center}
+\end{spacing}
+\pagebreak[4]
+
+%================摘要=============================%
+%中文摘要
+\setcounter{page}{1}
+\pagenumbering{Roman}
+\thispagestyle{plain}
+\begin{center}
+    \addcontentsline{toc}{section}{摘要} %将“XXX加入目录中”
+    \zihao{-2}
+    \heiti
+    摘 \quad 要
+\end{center}
+\begin{spacing}{1.7}
+    \zihao{-4}\songti
+
+    炔烃和叠氮化合物的点击化学反应，有着快速、百分百原子利用率、产物高选择性等众多优点，被誉为点击化学中的精华。基于此反应拓展而来的点击聚合反应，迅速在高分子材料领域获得了了广泛关注和应用。
+
+    ……
+
+    我们还尝试了采用不同单体，在最优条件下进行反应，均获得了高分子产物。表明了该反应体系的普适性。
+    \\
+    \\
+    \heiti{\textbf{关键词：}多变量系统；预测控制；环境试验设备}
+\end{spacing}
+\pagebreak[4]
+
+%英文摘要
+\thispagestyle{plain}
+\begin{center}
+    \addcontentsline{toc}{section}{Abstract}
+    \zihao{-2}
+    \tnewroman{Abstract}
+\end{center}
+\begin{spacing}{1.7}
+    \zihao{-4}                      
+    \tnewroman
+    {
+        Artificial Neuron Network (ANN) simulates human being's brain function and build the network structure. Convolutional Neural Network (CNN) have many advantage, such as……
+
+        This paper introduces the common pretreatment method of image, such as collecting image, normalization, graying and binarization. And apply these to the handwritten numeral recognition experiment and handwritten numerals writer recognition experiments.
+        \\
+        \\
+        \textbf{Keywords：}Writer recognition；Convolutional Neural Network；Handwritten character recognition
+    }
+\end{spacing}
+\pagebreak[4]
+
+
+%=============目录====================%
+\thispagestyle{plain}
+\begin{spacing}{1.7}
+    \addcontentsline{toc}{section}{目录}
+    \tableofcontents
+\end{spacing}
+\pagebreak[4]
+
+%=============正文====================%
+%正文设定
+\setboolean{@twoside}{true}
+\begin{spacing}{1.7}
+    \songti
+    \zihao{-4}
+    \setcounter{page}{1}
+    \pagenumbering{arabic}
+
+    %下面正文
+    \section{绪论}
+    \subsection{引言}
+    当今社会，科技的飞速发展为大家提供了快捷与舒适，但与此同时也增添了在信息安全上的危险。
+    在过去的二十几年来，我们通过数字密码来鉴别身份，但是随着科技的发展，不法分子借用高科技犯罪的案例年年增高，
+    密码被盗的情况时常发生。因此，怎样科学准确的辨别每一个人的身份则成为当今社会的重要问题。
+    \subsection{研究背景}
+    随着科技的日益发展，传统的密码因为记忆的繁琐以及容易被盗，似乎已经不再能满足这个通信发达的社会的需求。
+    人们急需一种更便捷而且辨识度更高的方式来辨识身份。循着便捷与辨识度高这两个约束条件\upcite{1}，
+    我们联想到的便是存在于每个人身上的生物特征，
+    所以基于每个人身上不同的生物特征而研究的鉴别技术现在成为了身份辨别技术上的主流。
+    \subsection{研究现状}
+    笔迹获取的方式有两种，所以鉴别方式也分为离线鉴别和在线鉴别\upcite{2,3}。
+    在线鉴别是采用专用的数字板来实时收集书写信号。由文献\upcite{4,5,6,7}可知，
+    因为信号是实时采集的，所以能采集的数据不仅包括笔迹序列，
+    而且可以采集到书写时的加速度、压力、速度等丰富有用的动态信息。
+    \subsection{论文结构}
+    本文分为四章。其中第一章简述了笔迹识别的研究背景和意义以及笔迹识别的基础知识等。
+    第二章节从卷积神经网络的发展历史、网络结构、学习规律三方面详细的讲述了卷积网络的基础知识。
+    第三章针对本文中的手写数字及写字人实验具体设计卷积神经网络的网络结构以及训练过程。
+    第五章节是手写数字识别及写字人识别实验的结果与分析。
+    \pagebreak[4]
+    \section{卷积神经网络的基础知识}
+    \subsection{卷积神经网络的网络结构}
+    卷积神经网络作为深度学习的一个分支，在网络结构上同样含有深度学习的"深度"性。网络拓扑结构是一个多层的神经网络\upcite{8}，
+    网络的每一层由多个独立的神经元组成的二维平面组成。网络一般分为输入层、卷积层、池化层、全连接层、输出层等。
+    \subsubsection{输入层}
+    因为卷积神经网络可以直接的接受二维的视觉模式\upcite{9}，所以我们可以直接把简单预处理后的二维图像输入到输入层中。
+    \subsubsection{输出}
+    ……
+    \subsection{卷积神经网络的学习规律}
+    ……
+    \subsubsection{前向传播}
+    这里为了显示一下\tnewroman{LaTeX}打公式比\tnewroman{Word}好看几万倍，本小节我就不采用正版模板里的内容了
+
+    在协变的方法\upcite{4,5,6,7}里,我们经常会选出一族特殊的观者(即一个参考系)来考察（在单一流体的宇宙里，
+    这族特殊观者便是与流体共动的观者）。这些观者构成世界线汇，世界线切矢量即观者的四速记作
+    $u^{a}=(\partial/\partial\lambda)^{a}$，$\lambda$是世界线固有时，观者们的四速构成光滑矢量场。
+    然后每一个观者，都可以构造出投影到它的三维空间的投影算子
+    \begin{equation}
+        h_{ab}=g_{ab}+u_{a}u_{b}
+    \end{equation}
+    这个投影算子$h_{ab}$也就是与这组观者正交的局域的类空超曲面(这里加上局域二字，
+    是因为并不一定存在全局的与这族观者世界线处处正交的一族类空超曲面)的诱导度规，
+    具有性质
+    \begin{equation}
+        {h^{a}}_{b}{h^{b}}_{c}={h^{a}}_{c},\quad {h^{b}}_{a}u_{b}=0
+    \end{equation}
+      研究流体的运动演化，也就是研究观者间的相对运动，可以证明一族由矢量场$u^{a}$代表的观者间的相对三速\upcite{3}为
+    \begin{equation}
+        \label{流体自相对三速}
+        U^{a}=h^{ac}{h_{b}}^{d}(\nabla_{d}u_{c})w^{b}
+    \end{equation}
+    其中$w^{b}$是观者间的相对位移\upcite{3}。一个常用的研究相对运动的方法是做如下分解,
+    把四速场的协变导数分解为与四速正交的反对称部分、与四速正交的对称无迹部分、与四速正交的对称有迹部分和剩下的部分。即是
+    \begin{equation}
+        \label{效果分解}
+        \nabla_{b}u_{a}=\omega_{ab}+\sigma_{ab}+\frac{1}{3}\theta h_{ab}-a_{a}u_{b}
+    \end{equation}
+    其中
+    \begin{equation}\label{a}
+    a_{a}=u^{b}\nabla_{b}u_{a}
+    \end{equation}
+    是观者四加速对偶矢量场。而
+    \begin{equation}\label{theta}
+        \theta=\nabla_{a}u^{a}
+    \end{equation}
+    是局域膨胀率，结合(\ref{流体自相对三速})可以证明\upcite{3}$\theta$的反映的是
+    观者间相互远离的快慢。而
+    \begin{equation}\label{sigmaab}
+        \sigma_{ab}=h^{c}_{(a}h_{b)}^{d}\nabla_{d}u_{c}-(1/3)\nabla_{c}u^{c}h_{ab}
+    \end{equation}
+    是对称无迹的剪切张量，满足$\sigma_{ab}u^{a}=0$，结合式(\ref{流体自相对三速})可以证明\upcite{3}剪切张量的效果是使得观者间发生剪切运动即流体的剪切，我们可以定义剪切效应的大小为
+    \begin{equation}\label{sigma}
+        \sigma^{2}\equiv (1/2)\sigma_{ab}\sigma^{ab}
+    \end{equation}
+    而
+    \begin{equation}\label{omegaab}
+        \omega_{ab}=h^{c}_{[a}h_{b]}^{d}\nabla_{d}u_{c}
+    \end{equation}
+    是反对称涡旋张量，满足$\omega_{ab}u^{a}=0$，结合
+    式(\ref{流体自相对三速})可以证明\upcite{3}涡旋张量的效果是使得观者间发生相对旋转的运动即流体的旋转，经常我们还关注
+    \begin{equation}\label{omega}
+        \omega^{2}\equiv (1/2)\omega_{ab}\omega^{ab}
+    \end{equation}
+    它反映的是涡旋张量的大小即观者间旋转得有多快。
+    并且当涡旋张量为零时，该参考系叫做超曲面正交的，即存在一个全局的处处与观者四速正交的一族类空超曲面。
+    倘若涡旋张量不为零时，我们谈及该参考系的类空超曲面时，往往是指局域的与该参考系的局域上的一些临近的观者
+    正交的超曲面。
+    易证当宇宙回到\tnewroman{FLRW}背景时，每个共动观者的局域尺度因子就等于尺度因子$a(t)$。
+    在研究宇宙微扰时，常关注膨胀率的涨落或者局域尺度因子的涨落。
+    定义膨胀率的涨落为
+    \begin{equation}
+        Z_{a}=D_{a}\theta
+    \end{equation}
+    其中$D_{a}$的定义为：对任意的(k,l)型张量场${T^{a_{1}…a_{k}}}_{b_{1}…b_{l}}$的作用效果如下式
+    \begin{equation}
+        D_{a}{T^{b_{1}…b_{k}}}_{c_{1}…c_{l}}=
+        {h^{b_{1}}}_{d_{1}}…{h^{b_{k}}}_{d_{k}}{h^{e_{1}}}_{c_{1}}…{h^{e_{1}}}_{c_{1}}
+        {h^{f}}_{a}\nabla_{f}{T^{d_{1}…d_{k}}}_{e_{1}…e_{l}}
+    \end{equation}
+    显然被算子$D_{a}$作用都会得空间张量，而且可以证明算子$D_{a}$满足$D_{a}h_{bc}=0$，
+    所以算子$D_{a}$就是与该族观者的(局域的)三维类空超曲面的上的诱导协变导数算子(下文也称空间协变导数算子）。
+    \subsubsection{反向传播}
+    ……
+    \subsubsection{学习特征图的组合}
+    ……
+    \subsection{本章小结}
+    ……
+    \pagebreak[4]%换页
+    \section{基于卷积神经的手写数字及写字人识别算法设计}
+    \subsection{输入输出层的设计}
+    ……
+    \subsection{隐藏层的设计}
+    ……
+    \subsection{本章小结}
+    ……
+    \pagebreak[4]%换页
+    \section{手写数字及写字人识别实验过程及其结果}
+    \subsection{手写数字识别实验}
+    \subsubsection{样本简介}
+    本论文的手写数字识别实验当中所用的样本分为两类，一类是训练样本集，另一类是测试样本集。
+
+    实验当中的训练样本集采用的是手写数字MNIST数据库。
+    这个数据库当中包含训练集样本60000个样例和测试集样本10000个样例。
+    MNIST数据库当中的数字样本已经全部大小归一化灰度化并且集中到同一个固定大小的图像当中。
+    该数据库包括MST的SD-1和SD-3数据库，当中包含一系列的二级制的手写数字图像。其
+    中SD-1的收集者来源是某高中的在校学生，而SD-3是由人口调查局员工收集的。
+    则我们的训练样本集也就是MNIST当中的训练样本集有30000个样本来自SD-3，
+    而另外30000个样本来自SD-1。这60000个训练样本分别来自约250个采集者。
+    \subsubsection{Writer Depend类数字识别实验}
+    \paragraph{4.1.2.1\quad ABCvsA数字识别实验}
+
+    实验内容：以A写字人、B写字人和C写字人，合计3000个数字0到9的数字图像数据为训练样本集。
+    A写字人的1000个数字0到9的数字图像数据为测试样本集。学习率为1，
+    单次训练样本数为10个，共训练40次。若识别所得数字与给定的标签匹配，则视为正确；不匹配则视为错误。
+
+    怎么生成表格插入图片等请看教程或自行百度，总之\tnewroman{word}能做到的肯定可以做到甚至更好。
+    \subsubsection{Writer Depend类数字识别实验结果分析}
+    ……
+
+
+    \pagebreak[4]
+
+
+%================结论=================%
+    \fancyhead[CE]{\songti 华南理工大学学士学位论文}
+    \fancyhead[CO]{\songti 结论}
+    \section*{结论}
+    \addcontentsline{toc}{section}{结论}
+    \phantomsection %咱也不知道为啥，但就是能不报错https://tex.stackexchange.com/questions/364010/hyperref-and-titlesec-conflict-and-warning
+    \subsection*{1.论文工作总结}
+    \addcontentsline{toc}{subsection}{1.论文工作总结}
+    ……
+    \subsection*{2.工作展望}
+    \addcontentsline{toc}{subsection}{2.工作展望}
+    ……
+    %正文内容到此为止
+\end{spacing}
+\pagebreak[4]
+%正文结束
+
+
+%================参考文献=================%
+\fancyhead[CE]{\songti 华南理工大学学士学位论文}
+\fancyhead[CO]{\songti \leftmark}
+\begin{thebibliography}{99}
+    \addcontentsline{toc}{section}{参考文献}
+    \zihao{-4}
+    \tnewroman
+    \bibitem{1} LeCun Y, Bottou L, Bengio Y, et al. Gradient-based learning applied to document recognition[J]. Proc. IEEE, 1998, 86(11): 2278-2324.
+    \bibitem{2} 刘国钧，陈绍业，王凤翥.图书馆目录[M].北京:高等教育出版社，1957.15-18.
+    \bibitem{3} Ngiam J, Chen Z, Chia D, et al. Tiled convolutional neural networks[C], Advances in Neural Information Processing Systems. 2010: 1279-1287.
+    \bibitem{4} 田露. 基于多特征数据融合的离线中文笔迹鉴别研究[D]. 河南大学, 2011.
+    \bibitem{5} 张慧档. 笔迹鉴别方法研究[D]. 郑州大学, 2002.
+    \bibitem{6} 梁亮. 图像处理技术在笔迹鉴定系统开发过程中的应用与研究[D]. 沈阳工业大学, 2007.
+    \bibitem{7} 陈先昌. 基于卷积神经网络的深度学习算法与应用研究[D]. 浙江工商大学, 2014.
+    \bibitem{8} 王强. 基于CNN的字符识别方法研究[D]. 天津师范大学, 2014.
+    \bibitem{9} 姜锡洲.一种温热外敷药制备方案[P].中国专利:881056073，1989-07-26.
+    \bibitem{10} GB/T 16159-1996，汉语拼音正词法基本规则[S].
+    \bibitem{11} 谢希德.创造学习的新思路[N].人民日报，1998-12-25(10).
+    \bibitem{12} 冯西桥.核反应堆压力管道和压力容器的LBB分析[R].北京:清华大学核能技术设计研究院，1997.
+    \bibitem{13} 王明亮.关于中国学术期刊标准化数据库系统工程的进展[EB/OL].
+       http://www.cajcd.edu.cn/pub/wml.txt/980810-2.html'1998-08-16/1998-10-04.
+    \bibitem{14} Krizhevsky A, Sutskever I, Hinton G E. Imagenet classification with deep convolutional neural networks[C], Advances in neural information processing systems. 2012: 1097-1105.
+    \bibitem{15} Zeiler M D, Fergus R. Visualizing and understanding convolutional networks[M], Computer Vision-ECCV 2014. Springer International Publishing, 2014: 818-833.
+    \bibitem{16} Zeiler M D, Krishnan D, Taylor G W, et al. Deconvolutional networks[C],Proc. CVPR, 2010: 2528-2535.
+    \bibitem{17} 冯西桥.核反应堆压力管道和压力容器的LBB分析[R].北京:清华大学核能技术设计研究院，1997.
+    \bibitem{18} 王明亮.关于中国学术期刊标准化数据库系统工程的进展[EB/OL].
+       http://www.cajcd.edu.cn/pub/wml.txt/980810-2.html'1998-08-16/1998-10-04.
+    \bibitem{19} Krizhevsky A, Sutskever I, Hinton G E. Imagenet classification with deep convolutional neural networks[C], Advances in neural information processing systems. 2012: 1097-1105.
+    \bibitem{20} Zeiler M D, Fergus R. Visualizing and understanding convolutional networks[M], Computer Vision-ECCV 2014. Springer International Publishing, 2014: 818-833.
+    \bibitem{21} Zeiler M D, Krishnan D, Taylor G W, et al. Deconvolutional networks[C],Proc. CVPR, 2010: 2528-2535.
+
+\end{thebibliography}
+\pagebreak[4]
+
+%=====================致谢=============================%
+\setboolean{@twoside}{false}
+\thispagestyle{plain}
+\section*{致谢}
+\addcontentsline{toc}{section}{致谢}
+\begin{spacing}{1.7}
+    \zihao{-4}\songti
+    这一段输入你的致谢内容
+\end{spacing}
+
+\end{document}
