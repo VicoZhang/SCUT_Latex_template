@@ -44,7 +44,7 @@ SCUT_LATEX_TEMPLATE
 
 1. 使用者：
 
-    打开`SCUT_Latex_Template.tex`文件，对里面的一些基本内容修改为自己的，之后采用 ` XeLaTeX`编译即可。
+    打开`SCUT_Latex_Template.tex`文件，对里面的一些基本内容修改为自己的，之后采用 `XeLaTeX`编译即可。
 
     建议将所有图像放在 `fig` 文件夹下。
 
@@ -54,7 +54,7 @@ SCUT_LATEX_TEMPLATE
 
 ## 开发环境
 
-`Win10 `+ `Sublime Text 3` + `SumatraPDF`
+`Win10`+ `Sublime Text 3` + `SumatraPDF`
 
 ## 参考资料
 
